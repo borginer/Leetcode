@@ -37,9 +37,23 @@ int minimumRecolors(string blocks, int k) {
     return min_recolors;
 }
 
+int minimumRecolorsWindow(string blocks, int k) {
+    int ret = blocks.length();
+    int blacks_in_window = 0;
+
+    for (int i = 0; i < blocks.length(); i++) {
+        if (i - k >= 0 && blocks[i - k] == 'B') blacks_in_window--; 
+        if (blocks[i] == 'B') blacks_in_window++;
+        // k - blacks = whites
+        if (ret > k - blacks_in_window) ret = k - blacks_in_window;
+    }
+
+    return ret;
+}
+
 int main() {
     string blocks = "BWBBBWWWBB";
-    if (minimumRecolors(blocks, 5) != 1) {
+    if (minimumRecolorsWindow(blocks, 5) != 1) {
         std::cout << "fail";
     } else {
         std::cout << "success";
